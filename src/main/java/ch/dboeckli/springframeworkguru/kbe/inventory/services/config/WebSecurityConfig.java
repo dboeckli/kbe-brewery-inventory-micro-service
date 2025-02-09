@@ -1,5 +1,6 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.config;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,10 +17,12 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
+            
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()  // permit all actuator endpoints
                 .anyRequest().authenticated()
             )
+            
             .httpBasic(httpBasic -> {});
 
         return http.build();

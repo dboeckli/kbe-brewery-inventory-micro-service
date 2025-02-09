@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by jt on 2019-09-09.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -37,7 +34,7 @@ public class AllocationServiceImpl implements AllocationService {
             totalAllocated.set(totalAllocated.get() + (beerOrderLine.getQuantityAllocated() != null ? beerOrderLine.getQuantityAllocated() : 0));
         });
 
-        log.debug("Total Ordered: " + totalOrdered.get() + " Total Allocated: " + totalAllocated.get());
+        log.info("Total Ordered: " + totalOrdered.get() + " Total Allocated: " + totalAllocated.get());
 
         return totalOrdered.get() == totalAllocated.get();
     }

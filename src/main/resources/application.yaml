@@ -4,25 +4,50 @@ server:
 spring:
   application:
     name: kbe-brewery-inventory-micro-service
+    
   docker:
     compose:
-      enabled: false
+      enabled: true
+      stop:
+        command: down
+      
   jackson:
     serialization:
       write-dates-as-timestamps: false
       write-date-timestamps-as-nanoseconds: true
+      
   zipkin:
     enabled: false
+    
   cloud:
     discovery:
       enabled: false
+      
   artemis:
     user: artemis
     password: simetraehcapa
+    
   security:
     user:
       name: good
       password: beer
+      
+  datasource:
+    url: jdbc:mysql://mysql:3306/beerservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: dbpassword
+    
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        # Show SQL  
+        show_sql: false
+        # Format SQL
+        format_sql: true
+        
   data:
     jpa:
       repositories:

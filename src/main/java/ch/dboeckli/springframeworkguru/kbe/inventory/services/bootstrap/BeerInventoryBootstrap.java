@@ -26,7 +26,7 @@ public class BeerInventoryBootstrap implements CommandLineRunner {
     private final BeerInventoryRepository beerInventoryRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if(beerInventoryRepository.count() == 0){
             loadInitialInv();
         }
@@ -54,6 +54,6 @@ public class BeerInventoryBootstrap implements CommandLineRunner {
                 .quantityOnHand(50)
                 .build());
 
-        log.debug("Loaded Inventory. Record count: " + beerInventoryRepository.count());
+        log.info("Loaded Inventory. Record count: " + beerInventoryRepository.count());
     }
 }

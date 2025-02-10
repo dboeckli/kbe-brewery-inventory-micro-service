@@ -13,14 +13,21 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+      
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+    
   h2:
     console:
       enabled: false    
+      
+  artemis:
+    user: artemis
+    password: simetraehcapa
+    broker-url: tcp://localhost:61616    
     
   docker:
     compose:
@@ -67,7 +74,3 @@ logbook:
   predicate:
     exclude:
       - path: /actuator/health
-
-# spring:
-#   jpa:
-#     show-sql: true

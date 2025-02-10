@@ -26,6 +26,7 @@ spring:
   artemis:
     user: artemis
     password: simetraehcapa
+    broker-url: tcp://localhost:61616
     
   security:
     user:

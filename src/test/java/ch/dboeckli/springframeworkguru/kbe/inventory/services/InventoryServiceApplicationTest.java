@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS)
-@ActiveProfiles("it-test")
+@ActiveProfiles("it_test")
 @Slf4j
 class InventoryServiceApplicationTest {
 

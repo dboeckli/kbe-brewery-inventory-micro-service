@@ -9,12 +9,14 @@ spring:
     pub-sub-domain: false
     
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    hikari:
+      jdbc-url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      username: sa
+      password: 
+      driver-class-name: org.h2.Driver
       
   jpa:
+    database: h2
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
@@ -22,16 +24,21 @@ spring:
     
   h2:
     console:
-      enabled: false  
+      enabled: false    
+      
+  artemis:
+    user: artemis
+    password: simetraehcapa
+    broker-url: tcp://localhost:61616    
     
   docker:
     compose:
-      enabled: false
+      enabled: true
       stop:
         command: down
       skip:
-        in-tests: true
-      file: compose-test.yaml
+        in-tests: false
+      file: compose-it-test.yaml
 
 management:
   health:
@@ -69,7 +76,3 @@ logbook:
   predicate:
     exclude:
       - path: /actuator/health
-
-# spring:
-#   jpa:
-#     show-sql: true

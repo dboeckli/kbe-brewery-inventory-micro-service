@@ -34,12 +34,12 @@ spring:
       password: beer
       
   datasource:
-    url: jdbc:mysql://localhost:3306/beerservice?useUnicode=true&character_set_server=utf8mb4&characterEncoding=UTF-8&serverTimezone=UTC
-    #url: jdbc:mysql://localhost:3306/beerservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: dbpassword
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/beerservice?useUnicode=yes&characterEncoding=UTF-8
+      username: root
+      password: dbpassword
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  
   jpa:
     database: mysql
     hibernate:
@@ -47,7 +47,7 @@ spring:
     properties:
       hibernate:
         # Show SQL  
-        show_sql: true
+        show_sql: false
         # Format SQL
         format_sql: true
         

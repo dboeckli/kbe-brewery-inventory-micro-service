@@ -14,9 +14,6 @@ import org.hibernate.type.SqlTypes;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Created by jt on 2019-05-31.
- */
 @Data  // TODO: DANGEROUS
 @Entity
 @NoArgsConstructor

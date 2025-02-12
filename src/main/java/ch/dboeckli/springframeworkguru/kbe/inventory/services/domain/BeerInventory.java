@@ -45,7 +45,7 @@ public class BeerInventory {
     private String upc;
 
     @Column(length = 36, columnDefinition = "varchar(36)")
-    private UUID beerId;
+    private String beerId;
     
     private Integer quantityOnHand;
 

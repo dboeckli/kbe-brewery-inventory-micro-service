@@ -24,7 +24,7 @@ public class NewInventoryListener {
         log.info("Received NewInventoryEvent: {}", event.toString());
 
         beerInventoryRepository.save(BeerInventory.builder()
-                .beerId(event.getBeerDto().getId())
+                .beerId(event.getBeerDto().getId().toString())
                 .quantityOnHand(event.getBeerDto().getQuantityOnHand())
                 .upc(event.getBeerDto().getUpc())
                 .build());

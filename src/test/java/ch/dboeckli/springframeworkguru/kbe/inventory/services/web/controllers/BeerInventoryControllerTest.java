@@ -46,14 +46,26 @@ class BeerInventoryControllerTest {
     @Test
     void listBeersById() throws Exception {
         UUID beerId = UUID.randomUUID();
-        BeerInventory inventory1 = BeerInventory.builder().id(UUID.randomUUID()).beerId(beerId).quantityOnHand(10).build();
-        BeerInventory inventory2 = BeerInventory.builder().id(UUID.randomUUID()).beerId(beerId).quantityOnHand(20).build();
+        BeerInventory inventory1 = BeerInventory.builder()
+                .id(UUID.randomUUID())
+                .beerId(beerId.toString())
+                .quantityOnHand(10).build();
+        BeerInventory inventory2 = BeerInventory.builder()
+                .id(UUID.randomUUID())
+                .beerId(beerId.toString())
+                .quantityOnHand(20).build();
         List<BeerInventory> inventories = Arrays.asList(inventory1, inventory2);
 
-        given(beerInventoryRepository.findAllByBeerId(beerId)).willReturn(inventories);
+        given(beerInventoryRepository.findAllByBeerId(beerId.toString())).willReturn(inventories);
 
-        BeerInventoryDto dto1 = BeerInventoryDto.builder().id(inventory1.getId()).beerId(beerId).quantityOnHand(10).build();
-        BeerInventoryDto dto2 = BeerInventoryDto.builder().id(inventory2.getId()).beerId(beerId).quantityOnHand(20).build();
+        BeerInventoryDto dto1 = BeerInventoryDto.builder()
+                .id(inventory1.getId())
+                .beerId(beerId)
+                .quantityOnHand(10).build();
+        BeerInventoryDto dto2 = BeerInventoryDto.builder()
+                .id(inventory2.getId())
+                .beerId(beerId)
+                .quantityOnHand(20).build();
 
         given(beerInventoryMapper.beerInventoryToBeerInventoryDto(any(BeerInventory.class)))
             .willReturn(dto1, dto2);

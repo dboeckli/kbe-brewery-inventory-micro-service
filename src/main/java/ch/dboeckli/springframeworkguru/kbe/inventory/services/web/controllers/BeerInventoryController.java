@@ -1,8 +1,8 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.web.controllers;
 
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.dto.BeerInventoryDto;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.repositories.BeerInventoryRepository;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.web.mappers.BeerInventoryMapper;
+import ch.guru.springframework.kbe.lib.dto.BeerInventoryDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Created by jt on 2019-05-31.
@@ -31,6 +30,6 @@ public class BeerInventoryController {
         return beerInventoryRepository.findAllByBeerId(beerId)
                 .stream()
                 .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

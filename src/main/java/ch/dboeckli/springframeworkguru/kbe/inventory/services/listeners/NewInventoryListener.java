@@ -2,8 +2,8 @@ package ch.dboeckli.springframeworkguru.kbe.inventory.services.listeners;
 
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.config.JmsConfig;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.domain.BeerInventory;
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.dto.events.NewInventoryEvent;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.repositories.BeerInventoryRepository;
+import ch.guru.springframework.kbe.lib.events.NewInventoryEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;

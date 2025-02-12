@@ -1,7 +1,7 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.web.mappers;
 
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.domain.BeerInventory;
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.dto.BeerInventoryDto;
+import ch.guru.springframework.kbe.lib.dto.BeerInventoryDto;
 import org.mapstruct.Mapper;
 
 

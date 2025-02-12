@@ -1,9 +1,9 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.services;
 
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.domain.BeerInventory;
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.dto.BeerOrderDto;
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.dto.BeerOrderLineDto;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.repositories.BeerInventoryRepository;
+import ch.guru.springframework.kbe.lib.dto.BeerOrderDto;
+import ch.guru.springframework.kbe.lib.dto.BeerOrderLineDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

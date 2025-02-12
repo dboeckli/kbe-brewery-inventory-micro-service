@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS)
 @ActiveProfiles("it_test")
 @Slf4j
-class InventoryServiceApplicationTest {
+class InventoryServiceApplicationIT {
 
     @Autowired
     private ApplicationContext applicationContext;

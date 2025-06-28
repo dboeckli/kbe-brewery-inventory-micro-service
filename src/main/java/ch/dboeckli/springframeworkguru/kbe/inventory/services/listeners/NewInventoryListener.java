@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jt on 2019-05-31.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Component

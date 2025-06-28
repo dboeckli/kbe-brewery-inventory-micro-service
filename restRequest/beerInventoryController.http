@@ -1,2 +1,3 @@
 ###
-GET http://localhost:{{application-port}}/api/v1/beer/{{beerId}}/inventory
+GET http://localhost:{{application-port}}/api/v1/beer/29d4c9b9-beeb-4964-97d4-4bbdcb3aa4a6/inventory
+Authorization: Basic good beer

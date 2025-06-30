@@ -10,9 +10,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jt on 2019-09-09.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -30,16 +27,15 @@ public class AllocationListener {
 
         try {
             Boolean allocationResult = allocationService.allocateOrder(request.getBeerOrder());
-
             builder.pendingInventory(!allocationResult);
-
             builder.allocationError(false);
+            jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE, builder.build());
+            log.info("Allocated Order {} placed on queue: {}", request.getBeerOrder().getId(), JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE);
         } catch (Exception e) {
             //some error occured
             builder.allocationError(true).pendingInventory(false);
             log.error("Allocation attempt failed for order id " + request.getBeerOrder().getId(), e);
         }
 
-        jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE, builder.build());
     }
 }

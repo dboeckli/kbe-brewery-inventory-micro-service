@@ -4,6 +4,7 @@
     <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <customFields>{"app_name":"${application_name}"}</customFields>
+            <includeLoggerName>true</includeLoggerName>
         </encoder>
     </appender>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

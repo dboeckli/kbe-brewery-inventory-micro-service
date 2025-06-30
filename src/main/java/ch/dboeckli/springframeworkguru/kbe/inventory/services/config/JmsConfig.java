@@ -7,9 +7,6 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
-/**
- * Created by jt on 2019-05-31.
- */
 //@EnableJms
 @Configuration
 public class JmsConfig {

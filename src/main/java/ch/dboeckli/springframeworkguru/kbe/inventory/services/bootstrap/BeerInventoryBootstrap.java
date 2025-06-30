@@ -20,12 +20,12 @@ public class BeerInventoryBootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if(beerInventoryRepository.count() == 0){
-            loadInitialInv();
+            loadInitialInventory();
         }
     }
 
-    private void loadInitialInv() {
-        log.info("Loading initial beer inventory...");
+    private void loadInitialInventory() {
+        log.info("### Loading initial beer inventory...");
         beerInventoryRepository.save(BeerInventory
                 .builder()
                 .upc(BEER_1_UPC)
@@ -44,6 +44,7 @@ public class BeerInventoryBootstrap implements CommandLineRunner {
                 .quantityOnHand(50)
                 .build());
 
-        log.info("Loaded Inventory. Record count: " + beerInventoryRepository.count());
+        log.info("### Loaded Inventory. Record count: " + beerInventoryRepository.count());
+        log.info("### Loaded Inventory. Records: " + beerInventoryRepository.findAll().stream().map(BeerInventory::toString).toList());
     }
 }

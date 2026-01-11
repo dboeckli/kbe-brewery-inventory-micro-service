@@ -1,5 +1,6 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.web.controllers;
 
+import ch.dboeckli.springframeworkguru.kbe.inventory.services.domain.BeerInventory;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.repositories.BeerInventoryRepository;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.web.mappers.BeerInventoryMapper;
 import ch.guru.springframework.kbe.lib.dto.BeerInventoryDto;
@@ -22,11 +23,21 @@ public class BeerInventoryController {
 
     @GetMapping("api/v1/beer/{beerId}/inventory")
     List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId){
-        log.debug("Finding Inventory for beerId:" + beerId);
+        log.info("Finding Inventory for beerId:" + beerId);
+
+        List<BeerInventory> beers = beerInventoryRepository.findAllByBeerId(beerId.toString());
 
         return beerInventoryRepository.findAllByBeerId(beerId.toString())
                 .stream()
                 .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
                 .toList();
+    }
+
+    @GetMapping("api/v1/beer/inventory")
+    List<BeerInventoryDto> listAllBeers(){
+        return beerInventoryRepository.findAll()
+            .stream()
+            .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
+            .toList();
     }
 }

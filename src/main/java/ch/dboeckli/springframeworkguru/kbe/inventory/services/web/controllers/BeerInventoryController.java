@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by jt on 2019-05-31.
- */
 @Slf4j
 @RequiredArgsConstructor
 @RestController

@@ -11,6 +11,10 @@ public interface BeerInventoryRepository extends JpaRepository<BeerInventory, UU
 
     List<BeerInventory> findAllByBeerId(String beerId);
 
+    List<BeerInventory> findAllById(UUID id);
+
     List<BeerInventory> findAllByUpc(String upc);
+
+    List<BeerInventory> findAll();
 
 }

@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,6 +75,7 @@ class BeerInventoryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].beerId").value(beerId.toString()))
             .andExpect(jsonPath("$[0].quantityOnHand").value(10))

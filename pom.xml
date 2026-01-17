@@ -53,7 +53,7 @@
         <merge-yaml-plugin.version>1.4</merge-yaml-plugin.version>
 
         <!-- our dependencies -->
-        <kbe-brewery-lib.version>0.0.3</kbe-brewery-lib.version>
+        <kbe-brewery-lib.version>0.0.4</kbe-brewery-lib.version>
 
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>

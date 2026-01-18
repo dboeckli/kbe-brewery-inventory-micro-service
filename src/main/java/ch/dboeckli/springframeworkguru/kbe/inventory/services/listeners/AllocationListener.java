@@ -1,11 +1,11 @@
 package ch.dboeckli.springframeworkguru.kbe.inventory.services.listeners;
 
-import ch.dboeckli.springframeworkguru.kbe.inventory.services.config.JmsConfig;
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.services.AllocationService;
 import ch.guru.springframework.kbe.lib.events.AllocateBeerOrderRequest;
 import ch.guru.springframework.kbe.lib.events.AllocateBeerOrderResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -18,8 +18,11 @@ public class AllocationListener {
     private final AllocationService allocationService;
     private final JmsTemplate jmsTemplate;
 
-    @JmsListener(destination = JmsConfig.ALLOCATE_ORDER_QUEUE)
-    public void listen(AllocateBeerOrderRequest request){
+    @Value("${sfg.brewery.queues.allocate-order-result}")
+    String allocatOrderResultQueue;
+
+    @JmsListener(destination = "${sfg.brewery.queues.allocate-order}")
+    public void listen(AllocateBeerOrderRequest request) {
         log.info("Allocating Order: " + request.getBeerOrder().getId());
 
         AllocateBeerOrderResult.AllocateBeerOrderResultBuilder builder = AllocateBeerOrderResult.builder();
@@ -29,8 +32,8 @@ public class AllocationListener {
             Boolean allocationResult = allocationService.allocateOrder(request.getBeerOrder());
             builder.pendingInventory(!allocationResult);
             builder.allocationError(false);
-            jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE, builder.build());
-            log.info("Allocated Order {} placed on queue: {}", request.getBeerOrder().getId(), JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE);
+            jmsTemplate.convertAndSend(allocatOrderResultQueue, builder.build());
+            log.info("Allocated Order {} placed on queue: {}", request.getBeerOrder().getId(), allocatOrderResultQueue);
         } catch (Exception e) {
             //some error occured
             builder.allocationError(true).pendingInventory(false);

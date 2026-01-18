@@ -11,9 +11,6 @@ spring:
       stop:
         command: down
 
-  zipkin:
-    enabled: false
-    
   cloud:
     discovery:
       enabled: false
@@ -110,3 +107,10 @@ management:
         enabled: false
     sampling:
       probability: 1.0
+
+sfg:
+  brewery:
+    queues:
+      allocate-order: allocate-order
+      new-inventory: new-inventory
+      allocate-order-result: allocate-order-result

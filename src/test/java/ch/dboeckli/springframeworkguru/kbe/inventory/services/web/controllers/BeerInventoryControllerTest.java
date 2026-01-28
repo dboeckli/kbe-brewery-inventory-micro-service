@@ -82,4 +82,42 @@ class BeerInventoryControllerTest {
             .andExpect(jsonPath("$[1].beerId").value(beerId.toString()))
             .andExpect(jsonPath("$[1].quantityOnHand").value(20));
     }
+
+    @Test
+    void listAllBeers() throws Exception {
+        BeerInventory inventory1 = BeerInventory.builder()
+                .id(UUID.randomUUID())
+                .beerId(UUID.randomUUID().toString())
+                .quantityOnHand(10).build();
+        BeerInventory inventory2 = BeerInventory.builder()
+                .id(UUID.randomUUID())
+                .beerId(UUID.randomUUID().toString())
+                .quantityOnHand(20).build();
+        List<BeerInventory> inventories = Arrays.asList(inventory1, inventory2);
+
+        given(beerInventoryRepository.findAll()).willReturn(inventories);
+
+        BeerInventoryDto dto1 = BeerInventoryDto.builder()
+                .id(inventory1.getId())
+                .beerId(UUID.fromString(inventory1.getBeerId()))
+                .quantityOnHand(10).build();
+        BeerInventoryDto dto2 = BeerInventoryDto.builder()
+                .id(inventory2.getId())
+                .beerId(UUID.fromString(inventory2.getBeerId()))
+                .quantityOnHand(20).build();
+
+        given(beerInventoryMapper.beerInventoryToBeerInventoryDto(any(BeerInventory.class)))
+            .willReturn(dto1, dto2);
+
+        mockMvc.perform(get("/api/v1/beer/inventory")
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(jsonPath("$", hasSize(2)))
+            .andExpect(jsonPath("$[0].beerId").value(inventory1.getBeerId()))
+            .andExpect(jsonPath("$[0].quantityOnHand").value(10))
+            .andExpect(jsonPath("$[1].beerId").value(inventory2.getBeerId()))
+            .andExpect(jsonPath("$[1].quantityOnHand").value(20));
+    }
 }

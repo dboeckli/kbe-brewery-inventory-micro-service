@@ -33,7 +33,7 @@ public class AllocationListener {
             builder.pendingInventory(!allocationResult);
             builder.allocationError(false);
             jmsTemplate.convertAndSend(allocatOrderResultQueue, builder.build());
-            log.info("Allocated Order {} placed on queue: {}", request.getBeerOrder().getId(), allocatOrderResultQueue);
+            log.info("Allocated Order result {} placed on queue: {}", request.getBeerOrder().getId(), allocatOrderResultQueue);
         } catch (Exception e) {
             //some error occured
             builder.allocationError(true).pendingInventory(false);

@@ -8,7 +8,6 @@ import org.springframework.boot.micrometer.metrics.test.autoconfigure.AutoConfig
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
@@ -18,10 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DirtiesContext
-@SpringBootTest
+@SpringBootTest(properties = {
+    "spring.docker.compose.skip.in-tests=false"
+})
 @AutoConfigureMockMvc
 @AutoConfigureMetrics
-@ActiveProfiles("it_test")
 @Slf4j
 class ActuatorInfoIT {
 

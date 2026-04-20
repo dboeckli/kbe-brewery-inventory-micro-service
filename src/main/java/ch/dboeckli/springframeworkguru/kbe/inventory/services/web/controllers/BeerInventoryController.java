@@ -19,25 +19,27 @@ import java.util.UUID;
 public class BeerInventoryController {
 
     private final BeerInventoryRepository beerInventoryRepository;
+
     private final BeerInventoryMapper beerInventoryMapper;
 
     @GetMapping("api/v1/beer/{beerId}/inventory")
-    List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId){
+    List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId) {
         log.info("Finding Inventory for beerId:" + beerId);
 
         List<BeerInventory> beers = beerInventoryRepository.findAllByBeerId(beerId.toString());
 
         return beerInventoryRepository.findAllByBeerId(beerId.toString())
-                .stream()
-                .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
-                .toList();
+            .stream()
+            .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
+            .toList();
     }
 
     @GetMapping("api/v1/beer/inventory")
-    List<BeerInventoryDto> listAllBeers(){
+    List<BeerInventoryDto> listAllBeers() {
         return beerInventoryRepository.findAll()
             .stream()
             .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
             .toList();
     }
+
 }

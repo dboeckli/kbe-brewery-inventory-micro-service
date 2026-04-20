@@ -50,4 +50,5 @@ class BeerInventoryBootstrapTest {
         verify(beerInventoryRepository).count();
         verifyNoMoreInteractions(beerInventoryRepository);
     }
+
 }

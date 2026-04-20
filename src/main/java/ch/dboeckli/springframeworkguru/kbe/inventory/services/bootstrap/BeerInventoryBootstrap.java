@@ -4,6 +4,7 @@ import ch.dboeckli.springframeworkguru.kbe.inventory.services.domain.BeerInvento
 import ch.dboeckli.springframeworkguru.kbe.inventory.services.repositories.BeerInventoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,40 +12,33 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class BeerInventoryBootstrap implements CommandLineRunner {
+
     private static final String BEER_1_UPC = "0631234200036";
+
     private static final String BEER_2_UPC = "0631234300019";
+
     private static final String BEER_3_UPC = "0083783375213";
 
     private final BeerInventoryRepository beerInventoryRepository;
 
     @Override
-    public void run(String... args) {
-        if(beerInventoryRepository.count() == 0){
+    public void run(String @NonNull ... args) {
+        if (beerInventoryRepository.count() == 0) {
             loadInitialInventory();
         }
     }
 
     private void loadInitialInventory() {
         log.info("### Loading initial beer inventory...");
-        beerInventoryRepository.save(BeerInventory
-                .builder()
-                .upc(BEER_1_UPC)
-                .quantityOnHand(10)
-                .build());
+        beerInventoryRepository.save(BeerInventory.builder().upc(BEER_1_UPC).quantityOnHand(10).build());
 
-        beerInventoryRepository.save(BeerInventory
-                .builder()
-                .upc(BEER_2_UPC)
-                .quantityOnHand(10)
-                .build());
+        beerInventoryRepository.save(BeerInventory.builder().upc(BEER_2_UPC).quantityOnHand(10).build());
 
-        beerInventoryRepository.save(BeerInventory
-                .builder()
-                .upc(BEER_3_UPC)
-                .quantityOnHand(50)
-                .build());
+        beerInventoryRepository.save(BeerInventory.builder().upc(BEER_3_UPC).quantityOnHand(50).build());
 
         log.info("### Loaded Inventory. Record count: " + beerInventoryRepository.count());
-        log.info("### Loaded Inventory. Records: " + beerInventoryRepository.findAll().stream().map(BeerInventory::toString).toList());
+        log.info("### Loaded Inventory. Records: "
+                + beerInventoryRepository.findAll().stream().map(BeerInventory::toString).toList());
     }
+
 }

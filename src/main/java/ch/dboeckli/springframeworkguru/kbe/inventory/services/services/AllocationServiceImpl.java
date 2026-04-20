@@ -31,7 +31,8 @@ public class AllocationServiceImpl implements AllocationService {
                 allocateBeerOrderLine(beerOrderLine);
             }
             totalOrdered.set(totalOrdered.get() + beerOrderLine.getOrderQuantity());
-            totalAllocated.set(totalAllocated.get() + (beerOrderLine.getQuantityAllocated() != null ? beerOrderLine.getQuantityAllocated() : 0));
+            totalAllocated.set(totalAllocated.get()
+                    + (beerOrderLine.getQuantityAllocated() != null ? beerOrderLine.getQuantityAllocated() : 0));
         });
 
         log.info("Total Ordered: " + totalOrdered.get() + " Total Allocated: " + totalAllocated.get());
@@ -45,7 +46,8 @@ public class AllocationServiceImpl implements AllocationService {
         beerInventoryList.forEach(beerInventory -> {
             int inventory = (beerInventory.getQuantityOnHand() == null) ? 0 : beerInventory.getQuantityOnHand();
             int orderQty = (beerOrderLine.getOrderQuantity() == null) ? 0 : beerOrderLine.getOrderQuantity();
-            int allocatedQty = (beerOrderLine.getQuantityAllocated() == null) ? 0 : beerOrderLine.getQuantityAllocated();
+            int allocatedQty = (beerOrderLine.getQuantityAllocated() == null) ? 0
+                    : beerOrderLine.getQuantityAllocated();
             int qtyToAllocate = orderQty - allocatedQty;
 
             if (inventory >= qtyToAllocate) { // full allocation
@@ -54,7 +56,8 @@ public class AllocationServiceImpl implements AllocationService {
                 beerInventory.setQuantityOnHand(inventory);
 
                 beerInventoryRepository.save(beerInventory);
-            } else if (inventory > 0) { //partial allocation
+            }
+            else if (inventory > 0) { // partial allocation
                 beerOrderLine.setQuantityAllocated(allocatedQty + inventory);
                 beerInventory.setQuantityOnHand(0);
 
@@ -63,4 +66,5 @@ public class AllocationServiceImpl implements AllocationService {
         });
 
     }
+
 }

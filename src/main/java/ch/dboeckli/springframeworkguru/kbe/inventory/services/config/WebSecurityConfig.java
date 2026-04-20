@@ -12,16 +12,17 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        http
-            .csrf(AbstractHttpConfigurer::disable)
-            
-            .authorizeHttpRequests(authz -> authz
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()  // permit all actuator endpoints
-                .anyRequest().authenticated()
-            )
-            
-            .httpBasic(httpBasic -> {});
+        http.csrf(AbstractHttpConfigurer::disable)
+
+            .authorizeHttpRequests(authz -> authz.requestMatchers(EndpointRequest.toAnyEndpoint())
+                .permitAll() // permit all actuator endpoints
+                .anyRequest()
+                .authenticated())
+
+            .httpBasic(httpBasic -> {
+            });
 
         return http.build();
     }
+
 }

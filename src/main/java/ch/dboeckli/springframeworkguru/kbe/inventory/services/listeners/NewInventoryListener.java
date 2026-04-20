@@ -25,4 +25,5 @@ public class NewInventoryListener {
             .upc(event.getBeerDto().getUpc())
             .build());
     }
+
 }

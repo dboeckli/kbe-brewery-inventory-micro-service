@@ -14,9 +14,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(properties = {
-    "spring.docker.compose.skip.in-tests=false"
-})
+@SpringBootTest(properties = { "spring.docker.compose.skip.in-tests=false" })
 @Slf4j
 class NewInventoryListenerIT {
 
@@ -30,11 +28,7 @@ class NewInventoryListenerIT {
     void testNewInventoryListener() {
         beerInventoryRepository.deleteAll();
         // Arrange
-        BeerDto beerDto = BeerDto.builder()
-            .id(UUID.randomUUID())
-            .quantityOnHand(1)
-            .upc("UPC-PLACEHOLDER")
-            .build();
+        BeerDto beerDto = BeerDto.builder().id(UUID.randomUUID()).quantityOnHand(1).upc("UPC-PLACEHOLDER").build();
         NewInventoryEvent event = new NewInventoryEvent(beerDto);
 
         // Act
@@ -49,6 +43,5 @@ class NewInventoryListenerIT {
         assertEquals(beerDto.getQuantityOnHand(), inventory.getQuantityOnHand());
         assertEquals(beerDto.getUpc(), inventory.getUpc());
     }
-
 
 }

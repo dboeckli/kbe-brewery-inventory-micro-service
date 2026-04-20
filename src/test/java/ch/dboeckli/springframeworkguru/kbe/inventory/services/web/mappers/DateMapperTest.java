@@ -43,4 +43,5 @@ class DateMapperTest {
         LocalDateTime expectedUtcLocalDateTime = LocalDateTime.of(2024, 5, 10, 12, 34, 56, 123000000);
         assertEquals(Timestamp.valueOf(expectedUtcLocalDateTime), result);
     }
+
 }

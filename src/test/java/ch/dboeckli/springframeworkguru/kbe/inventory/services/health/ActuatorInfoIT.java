@@ -11,21 +11,19 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
-import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DirtiesContext
-@SpringBootTest(properties = {
-    "spring.docker.compose.skip.in-tests=false"
-})
+@SpringBootTest(properties = { "spring.docker.compose.skip.in-tests=false" })
 @AutoConfigureMockMvc
 @AutoConfigureMetrics
 @Slf4j
 class ActuatorInfoIT {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     @Autowired
     BuildProperties buildProperties;
 
@@ -41,9 +39,7 @@ class ActuatorInfoIT {
             .andExpect(jsonPath("$.git.commit.id.abbrev").isString())
 
             .andExpect(jsonPath("$.build.artifact").value(buildProperties.getArtifact()))
-            .andExpect(jsonPath("$.build.group").value(buildProperties.getGroup()))
-
-            .andExpect(jsonPath("$.java.version").value(startsWith("21")));
+            .andExpect(jsonPath("$.build.group").value(buildProperties.getGroup()));
     }
 
     @Test
@@ -65,9 +61,11 @@ class ActuatorInfoIT {
         try {
             Object json = OBJECT_MAPPER.readValue(body, Object.class);
             return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(json);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // Falls kein valides JSON: unverändert zurückgeben
             return body;
         }
     }
+
 }

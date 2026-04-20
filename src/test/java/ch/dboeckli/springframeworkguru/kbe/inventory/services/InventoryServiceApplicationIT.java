@@ -8,12 +8,8 @@ import org.springframework.context.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(
-    useMainMethod = SpringBootTest.UseMainMethod.ALWAYS,
-    properties = {
-        "spring.docker.compose.skip.in-tests=false"
-    }
-)
+@SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS,
+        properties = { "spring.docker.compose.skip.in-tests=false" })
 @Slf4j
 class InventoryServiceApplicationIT {
 

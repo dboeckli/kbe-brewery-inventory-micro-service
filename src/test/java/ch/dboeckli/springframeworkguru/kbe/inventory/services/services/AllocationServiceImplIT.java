@@ -15,11 +15,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(
-    properties = {
-        "spring.docker.compose.skip.in-tests=false"
-    }
-)
+@SpringBootTest(properties = { "spring.docker.compose.skip.in-tests=false" })
 @Slf4j
 class AllocationServiceImplIT {
 
@@ -33,10 +29,7 @@ class AllocationServiceImplIT {
     void allocateOrder() {
         String upc = "123456789";
 
-        BeerInventory inventory = BeerInventory.builder()
-            .upc(upc)
-            .quantityOnHand(10)
-            .build();
+        BeerInventory inventory = BeerInventory.builder().upc(upc).quantityOnHand(10).build();
 
         beerInventoryRepository.save(inventory);
 
@@ -47,10 +40,7 @@ class AllocationServiceImplIT {
             .quantityAllocated(0)
             .build();
 
-        BeerOrderDto order = BeerOrderDto.builder()
-            .id(UUID.randomUUID())
-            .beerOrderLines(List.of(orderLine))
-            .build();
+        BeerOrderDto order = BeerOrderDto.builder().id(UUID.randomUUID()).beerOrderLines(List.of(orderLine)).build();
 
         Boolean fullyAllocated = allocationService.allocateOrder(order);
 

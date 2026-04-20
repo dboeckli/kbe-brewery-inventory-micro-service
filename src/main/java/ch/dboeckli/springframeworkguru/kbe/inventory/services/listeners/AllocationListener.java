@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class AllocationListener {
 
     private final AllocationService allocationService;
+
     private final JmsTemplate jmsTemplate;
 
     @Value("${sfg.brewery.queues.allocate-order-result}")
@@ -33,12 +34,15 @@ public class AllocationListener {
             builder.pendingInventory(!allocationResult);
             builder.allocationError(false);
             jmsTemplate.convertAndSend(allocatOrderResultQueue, builder.build());
-            log.info("Allocated Order result {} placed on queue: {}", request.getBeerOrder().getId(), allocatOrderResultQueue);
-        } catch (Exception e) {
-            //some error occured
+            log.info("Allocated Order result {} placed on queue: {}", request.getBeerOrder().getId(),
+                    allocatOrderResultQueue);
+        }
+        catch (Exception e) {
+            // some error occured
             builder.allocationError(true).pendingInventory(false);
             log.error("Allocation attempt failed for order id " + request.getBeerOrder().getId(), e);
         }
 
     }
+
 }

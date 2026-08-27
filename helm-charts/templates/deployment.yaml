@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{.Values.busyboxImage.pullPolicy }}
           command: [ 'sh', '-c', 'until nc -z {{ .Values.jms.serviceFQDN  }} {{ .Values.jms.broker.port }}; do echo "[busybox: wait-for-jms] waiting for jms"; sleep 2; done; echo "[busybox: wait-for-jms] jms is available"' ]
       containers:
-        - name: {{ .Chart.Name }}
+        - name: @project.artifactId@
           image: "{{ .Values.image.registry }}/@project.artifactId@:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:

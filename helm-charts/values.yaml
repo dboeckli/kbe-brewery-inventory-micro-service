@@ -1,3 +1,6 @@
+nameOverride: "kbe-brewery-inventory-micro-service"
+fullnameOverride: "kbe-brewery-inventory-micro-service"
+
 global:
   timezone: Europe/Zurich
   timezonePath: /etc/localtime
@@ -52,6 +55,8 @@ probes:
 mysql:
   enabled: true
 
+  fullnameOverride: "kbe-brewery-inventory-micro-service-mysql"
+
   database: beerservice
 
   port: 3306
@@ -67,6 +72,8 @@ mysql:
 
 jms:
   enabled: true
+
+  fullnameOverride: "kbe-brewery-inventory-micro-service-jms"
 
   broker:
     port: 61616

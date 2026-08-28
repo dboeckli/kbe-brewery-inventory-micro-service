@@ -9,6 +9,53 @@ https://github.com/dboeckli/kbe-brewery-gateway/blob/master/README.md
 
 Original git repository: https://github.com/springframeworkguru/kbe-sb-microservices.git
 
+## Architecture Overview
+
+```mermaid
+graph LR
+    Client(["💻 Client"])
+
+    subgraph Beer ["Beer Microservice :8080"]
+        BeerAPI["Beer REST API\nSpring Web MVC"]
+    end
+
+    subgraph Inventory ["kbe-brewery-inventory-micro-service :8082"]
+        InvAPI["Beer Inventory REST API\nSpring Web MVC"]
+        MySQL[("MySQL")]
+        Artemis{{"Artemis (JMS)"}}
+        Alloc["AllocationService"]
+    end
+
+    Client --> InvAPI
+    BeerAPI -->|"GET /api/v1/beer/{beerId}/inventory"| InvAPI
+    InvAPI --> MySQL
+    BeerAPI -->|"new-inventory / allocate-order events"| Artemis
+    Artemis --> NewInv["NewInventoryListener"]
+    Artemis --> AllocListener["AllocationListener"]
+    NewInv --> MySQL
+    AllocListener --> Alloc
+    Alloc --> MySQL
+    Alloc -->|"allocate-order-result"| Artemis
+    Artemis -->|"allocate-order-result"| BeerAPI
+```
+
+### Role of the services
+
+**kbe-brewery-inventory-micro-service** (:8082) — the primary beer inventory source of the KBE
+brewery. It exposes a REST API (Spring Web MVC) that the beer microservice calls via RestClient to
+read the current inventory for a beer (`GET /api/v1/beer/{beerId}/inventory`,
+`BeerInventoryController`). Inventory data is stored in MySQL (JPA, `BeerInventoryRepository`).
+
+The service is also a JMS consumer/producer on Artemis:
+
+- `NewInventoryListener` consumes `new-inventory` events (published by the beer microservice when a
+  beer is brewed) and persists the new quantity on hand (`NewInventoryListener.listen`).
+- `AllocationListener` consumes `allocate-order` events, delegates to `AllocationService` (full /
+  partial allocation against the stored inventory) and publishes the result back to the
+  `allocate-order-result` queue (`AllocationListener.listen`).
+
+On startup, `BeerInventoryBootstrap` seeds three beers with initial stock when the table is empty.
+
 ## Deployment with Helm
 
 Deployment is Helm-only: chart in `helm-charts/` (packaged as `kbe-brewery-inventory-micro-service-chart`),

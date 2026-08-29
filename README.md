@@ -16,27 +16,38 @@ graph LR
     Client(["💻 Client"])
 
     subgraph Beer ["Beer Microservice :8080"]
-        BeerAPI["Beer REST API\nSpring Web MVC"]
+        direction TB
+        BeerAPI["Beer REST API"]
     end
 
-    subgraph Inventory ["kbe-brewery-inventory-micro-service :8082"]
-        InvAPI["Beer Inventory REST API\nSpring Web MVC"]
-        MySQL[("MySQL")]
-        Artemis{{"Artemis (JMS)"}}
+    subgraph Artemis ["Artemis (JMS)"]
+        direction TB
+        NewInvQ["new-inventory"]
+        AllocQ["allocate-order"]
+        AllocResultQ["allocate-order-result"]
+    end
+
+    subgraph Inventory ["Inventory Microservice :8082"]
+        direction TB
+        InvAPI["Beer Inventory REST API"]
+        NewInv["NewInventoryListener"]
+        AllocListener["AllocationListener"]
         Alloc["AllocationService"]
     end
+
+    MySQL[("MySQL")]
 
     Client --> InvAPI
     BeerAPI -->|"GET /api/v1/beer/{beerId}/inventory"| InvAPI
     InvAPI --> MySQL
     BeerAPI -->|"new-inventory / allocate-order events"| Artemis
-    Artemis --> NewInv["NewInventoryListener"]
-    Artemis --> AllocListener["AllocationListener"]
+    NewInvQ --> NewInv
+    AllocQ --> AllocListener
     NewInv --> MySQL
     AllocListener --> Alloc
     Alloc --> MySQL
-    Alloc -->|"allocate-order-result"| Artemis
-    Artemis -->|"allocate-order-result"| BeerAPI
+    Alloc -->|"allocate-order-result"| AllocResultQ
+    AllocResultQ -->|"allocate-order-result"| BeerAPI
 ```
 
 ### Role of the services

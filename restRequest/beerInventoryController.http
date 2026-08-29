@@ -1,11 +1,20 @@
 ###
+< scripts/traceparent.js
 GET http://localhost:{{application-port}}/api/v1/beer/009cae48-de2b-4ff3-aede-9f730c547e1e/inventory
 Authorization: Basic good beer
+traceparent: 00-{{traceId}}-{{spanId}}-03
+baggage: testBaggage=kbe-brewery-inventory-micro-service
 
 ###
+< scripts/traceparent.js
 GET http://localhost:{{application-port}}/api/v1/beer/158ef6c0-cbdf-49aa-b187-e32ac8ae5026/inventory
 Authorization: Basic good beer
+traceparent: 00-{{traceId}}-{{spanId}}-03
+baggage: testBaggage=kbe-brewery-inventory-micro-service
 
 ###
+< scripts/traceparent.js
 GET http://localhost:{{application-port}}/api/v1/beer/inventory
 Authorization: Basic good beer
+traceparent: 00-{{traceId}}-{{spanId}}-03
+baggage: testBaggage=kbe-brewery-inventory-micro-service

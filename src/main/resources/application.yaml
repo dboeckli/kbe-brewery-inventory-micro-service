@@ -140,6 +140,16 @@ sfg:
       new-inventory: new-inventory
       allocate-order-result: allocate-order-result
 
+jdbc:
+  includes: [CONNECTION, QUERY, FETCH, KEYS]
+  opentelemetry:
+    analysis:
+      enabled: true
+      summary:
+        enabled: true
+      sanitize:
+        enabled: true
+
 logging:
   level:
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
